@@ -1,5 +1,7 @@
 <?php
 
+    require_once("paramPwd.php");
+
 function generatePassword($length = 15) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_~#';
     $charactersLength = strlen($characters);
@@ -34,7 +36,7 @@ $pwd = substr($shfl,0,8);
 //echo $pwd;
 
 ?>
-
+<?php  require_once("paramPwd.php"); ?>
 
 <!--
 
@@ -49,7 +51,7 @@ $pwd = substr($shfl,0,8);
 <title>Page Title</title>
 </head>
 <body>
-<!--<div class="card">
+<div class="card">
   <div class="card-body">
 <?php //echo $password; ?>
   </div>
@@ -71,7 +73,7 @@ $pwd = substr($shfl,0,8);
 <!--
 <form action='paramPwd.php'>
 <form >
-<!--Nombre de mot de passe a générer : <input type='text' Name='nbrPasswd' value='1'>
+Nombre de mot de passe a générer : <input type='text' Name='nbrPasswd' value='1'>
 <br>
 Taille du mot de passe : <input type='text' Name='taille' >
 <br>-->
@@ -139,7 +141,7 @@ Taille du mot de passe : <input type='text' Name='taille' >
                   <p>Merci de saisir la taille du mot de passe</p>
 
                   <div class="form-outline mb-4">
-                    <input type="text-center" Name='taille' class="form-control"
+                    <input input type='text' Name='taille' class="form-control"
                       placeholder="5" />
                    
                   </div>
