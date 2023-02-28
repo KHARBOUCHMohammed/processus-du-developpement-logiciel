@@ -1,6 +1,6 @@
 <?php
 
-    require_once("paramPwd.php");
+    //require_once("paramPwd.php");
 
 function generatePassword($length = 15) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_~#';
@@ -36,7 +36,7 @@ $pwd = substr($shfl,0,8);
 //echo $pwd;
 
 ?>
-<?php  require_once("paramPwd.php"); ?>
+<?php  //require_once("paramPwd.php"); ?>
 
 <!--
 
@@ -142,7 +142,7 @@ Taille du mot de passe : <input type='text' Name='taille' >
 
                   <div class="form-outline mb-4">
                     <input input type='text' Name='taille' class="form-control"
-                      placeholder="5" />
+                      placeholder="5" value="8" disabled/>
                    
                   </div>
 
