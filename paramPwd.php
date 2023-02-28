@@ -3,9 +3,8 @@
 //$SaisieNbrPasswd     = $_GET['nbrPasswd']    ;
 
 $SaisieNbrPasswd     = 1;
-//$SaisieNbrCaract    = $_GET['taille']    ;
-
-$SaisieNbrCaract = 8;
+$SaisieNbrCaract    = $_GET['taille']    ;
+//$SaisieNbrCaract = 8;
 //$SaisieTypePasswd     = $_GET['typePasswd']    ;
 
 

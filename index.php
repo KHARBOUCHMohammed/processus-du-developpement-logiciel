@@ -1,106 +1,82 @@
 <?php
 
-    //require_once("paramPwd.php");
+/*
+// Récupère les paramètres pour adapter selon les besoins de l'utilisateur
+//$SaisieNbrPasswd     = $_GET['nbrPasswd']    ;
+if(isset($_POST['submit']))
+{
+$SaisieNbrPasswd     = 1;
+$SaisieNbrCaract    = $_POST['taille']    ;
+//$SaisieNbrCaract = 8;
+//$SaisieTypePasswd     = $_GET['typePasswd']    ;
 
-function generatePassword($length = 15) {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_~#';
-    $charactersLength = strlen($characters);
-    $randomString = '';
-    for ($i = 0; $i < $length; $i++) {
-        $randomString .= $characters[rand(0, $charactersLength - 1)];
-    }
-    return $randomString;
+
+$caract="@!:;,*{[]}/?*~$=+_-&abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+*/
+// Type de caractères à prendre en compte pour générer les mots de passe (change selon paramètre utilisateur) :
+/*if ($SaisieTypePasswd == '1')
+{
+$caract = "0123456789";
+}
+else if ($SaisieTypePasswd == '2')
+{
+$caract = "abcdefghijklmnopqrstuvwyxz";
+}
+else if ($SaisieTypePasswd == '3')
+{
+$caract = "abcdefghijklmnopqrstuvwyxz0123456789";
+}
+else if ($SaisieTypePasswd == '4')
+{
+$caract = "abcdefghijklmnopqrstuvwyxz0123456789@!:;,§/?*µ$=+";
+}*/
+
+
+
+// Nombre de caractères que le mot de passe doit contenir (= saisie utilisateur) :
+/*$nb_caract = $SaisieNbrCaract;
+
+// On fait un première boucle pour générer des mots de passe jusqu'au nombre indiqué par l'utilisateur
+// Puis une seconde boucle pour générer le mot de passe caractère par caractère jusqu'au nombre indiqué par l'utilisateur
+for($nbrPasswd = 1; $nbrPasswd <= $SaisieNbrPasswd; $nbrPasswd++)
+{
+for($i = 1; $i <= $nb_caract; $i++) {
+
+// On compte le nombre de caractères
+$Nbr = strlen($caract);
+
+// On choisit un caractère au hasard dans la chaine sélectionnée :
+$Nbr = mt_rand(0,($Nbr-1));
+
+// Pour finir, on écrit le résultat :
+//print $caract[$Nbr];
+
+}
+echo "<br>";
 }
 
-$password = generatePassword();
-//echo $password;
+}*/
+?>
+
+<?php
+function generer_mot_de_passe($longueur ) {
+
+    $longueur = $_POST['taille'];
+  // Liste des caractères possibles dans le mot de passe
+  $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  // Initialisation du mot de passe
+  $mot_de_passe = '';
+  // Boucle pour générer le mot de passe caractère par caractère
+  for ($i = 0; $i < $longueur; $i++) {
+    $mot_de_passe .= $caracteres[rand(0, strlen($caracteres) - 1)];
+  }
+  // Retourner le mot de passe généré
+  return $mot_de_passe;
+}
 
 
-
- $comb = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
- $pass = array(); 
- $combLen = strlen($comb) - 1; 
- for ($i = 0; $i < 8; $i++) {
-     $n = rand(0, $combLen);
-     $pass[] = $comb[$n];
- }
-// print(implode($pass)); 
-
-
-
- 
-
-$comb = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-$shfl = str_shuffle($comb);
-$pwd = substr($shfl,0,8);
-//echo $pwd;
 
 ?>
-<?php  //require_once("paramPwd.php"); ?>
-
-<!--
-
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-<title>Page Title</title>
-</head>
-<body>
-<div class="card">
-  <div class="card-body">
-<?php //echo $password; ?>
-  </div>
-</div>
-
-
-<div class="card">
-  <div class="card-body">
-<?php //print(implode($pass));  ?>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-body">
-<?php //echo $pwd; ?>
-  </div>
-</div>-->
-
-<!--
-<form action='paramPwd.php'>
-<form >
-Nombre de mot de passe a générer : <input type='text' Name='nbrPasswd' value='1'>
-<br>
-Taille du mot de passe : <input type='text' Name='taille' >
-<br>-->
-<!--Type de mot de passe :     <select name='typePasswd'>
-<option value='1'>Chiffres uniquement</option>
-<option value='2'>Lettres uniquement</option>
-<option value='3'>Chiffres et lettres</option>
-<option value='4'>Tout caractères</option>
-</select>-->
-<!--<br>
-<input type='submit' value='Générer'>
-</form>
-
-
-</body>
-</html>
-
--->
-
-
-
-
-
-
-
-
-
 
 
 
@@ -137,19 +113,32 @@ Taille du mot de passe : <input type='text' Name='taille' >
                   <h3 class="mt-1 mb-5 pb-1">We are CERI Students team</h3>
                 </div>
 
-                <form action='paramPwd.php'>
-                  <p>Merci de saisir la taille du mot de passe</p>
+                     <form method="POST" >
+                  <p>Please enter the password size</p>
 
                   <div class="form-outline mb-4">
-                    <input input type='text' Name='taille' class="form-control"
-                      placeholder="5" value="8" disabled/>
+                    <input type='number' Name='taille' class="form-control"
+                      placeholder="8"  min="1" max="30" maxlength='30' title='Please enter a number between 1 & 30' />
                    
                   </div>
+
+                  <div class="form-outline mb-4">
+                  
+
+                    <?php
+                     
+
+                        $mot_de_passe = generer_mot_de_passe($_POST['taille']);
+                        echo $mot_de_passe;
+                    
+                    ?>    
+                  </div>
+
 
                 
 
                   <div class="text-center pt-1 mb-5 pb-1">
-                    <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Générer</button>
+                    <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit"> Generate Password</button>
                  
                   </div>
 
