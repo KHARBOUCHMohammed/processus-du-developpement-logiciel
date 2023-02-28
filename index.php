@@ -59,19 +59,45 @@ echo "<br>";
 ?>
 
 <?php
+
+function messageErreur($length){
+
+  if( $length == 0){
+    return "Erreur the number must not be zero !";
+  }
+  elseif($length > 30){
+    return "Erreur the password must not exceed 30 characters !";
+  }
+  else if ( $length == null  && empty($length)) {
+    return "Please enter a number between 1 and 30 :)";
+  }
+  elseif ($length < 0) { 
+       return "Erreur the number must not be negative !";
+    }
+  else {
+      return "correct";
+  }
+
+  }
 function generer_mot_de_passe($longueur ) {
 
-    $longueur = $_POST['taille'];
-  // Liste des caractères possibles dans le mot de passe
-  $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  // Initialisation du mot de passe
-  $mot_de_passe = '';
-  // Boucle pour générer le mot de passe caractère par caractère
-  for ($i = 0; $i < $longueur; $i++) {
-    $mot_de_passe .= $caracteres[rand(0, strlen($caracteres) - 1)];
-  }
-  // Retourner le mot de passe généré
-  return $mot_de_passe;
+    
+    if (messageErreur($longueur) == "correct"){
+        $lon = $_POST['taille'];
+        // Liste des caractères possibles dans le mot de passe
+        $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        // Initialisation du mot de passe
+        $mot_de_passe = '';
+        // Boucle pour générer le mot de passe caractère par caractère
+        for ($i = 0; $i < $lon; $i++) {
+          $mot_de_passe .= $caracteres[rand(0, strlen($caracteres) - 1)];
+        }
+        // Retourner le mot de passe généré
+         return $mot_de_passe;
+    } else {
+        return   $mot_de_passe = messageErreur($longueur) ;
+    }
+  
 }
 
 
@@ -117,8 +143,8 @@ function generer_mot_de_passe($longueur ) {
                   <p>Please enter the password size</p>
 
                   <div class="form-outline mb-4">
-                    <input type='number' Name='taille' class="form-control"
-                      placeholder="8"  min="1" max="30" maxlength='30' title='Please enter a number between 1 & 30' />
+                    <input type='number' name='taille' class="form-control"
+                      placeholder="Please enter a number"  title='Please enter a number between 1 & 30' />
                    
                   </div>
 
@@ -127,15 +153,14 @@ function generer_mot_de_passe($longueur ) {
 
                     <?php
                      
-
-                        $mot_de_passe = generer_mot_de_passe($_POST['taille']);
-                        echo $mot_de_passe;
-                    
+                        if(isset($_POST['taille']) ){
+                          $mot_de_passe = generer_mot_de_passe($_POST['taille']);
+                          echo $mot_de_passe;
+                        }
+                         
+              
                     ?>    
                   </div>
-
-
-                
 
                   <div class="text-center pt-1 mb-5 pb-1">
                     <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit"> Generate Password</button>
