@@ -1,62 +1,3 @@
-<?php
-
-/*
-// Récupère les paramètres pour adapter selon les besoins de l'utilisateur
-//$SaisieNbrPasswd     = $_GET['nbrPasswd']    ;
-if(isset($_POST['submit']))
-{
-$SaisieNbrPasswd     = 1;
-$SaisieNbrCaract    = $_POST['taille']    ;
-//$SaisieNbrCaract = 8;
-//$SaisieTypePasswd     = $_GET['typePasswd']    ;
-
-
-$caract="@!:;,*{[]}/?*~$=+_-&abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-*/
-// Type de caractères à prendre en compte pour générer les mots de passe (change selon paramètre utilisateur) :
-/*if ($SaisieTypePasswd == '1')
-{
-$caract = "0123456789";
-}
-else if ($SaisieTypePasswd == '2')
-{
-$caract = "abcdefghijklmnopqrstuvwyxz";
-}
-else if ($SaisieTypePasswd == '3')
-{
-$caract = "abcdefghijklmnopqrstuvwyxz0123456789";
-}
-else if ($SaisieTypePasswd == '4')
-{
-$caract = "abcdefghijklmnopqrstuvwyxz0123456789@!:;,§/?*µ$=+";
-}*/
-
-
-
-// Nombre de caractères que le mot de passe doit contenir (= saisie utilisateur) :
-/*$nb_caract = $SaisieNbrCaract;
-
-// On fait un première boucle pour générer des mots de passe jusqu'au nombre indiqué par l'utilisateur
-// Puis une seconde boucle pour générer le mot de passe caractère par caractère jusqu'au nombre indiqué par l'utilisateur
-for($nbrPasswd = 1; $nbrPasswd <= $SaisieNbrPasswd; $nbrPasswd++)
-{
-for($i = 1; $i <= $nb_caract; $i++) {
-
-// On compte le nombre de caractères
-$Nbr = strlen($caract);
-
-// On choisit un caractère au hasard dans la chaine sélectionnée :
-$Nbr = mt_rand(0,($Nbr-1));
-
-// Pour finir, on écrit le résultat :
-//print $caract[$Nbr];
-
-}
-echo "<br>";
-}
-
-}*/
-?>
 
 <?php
 
@@ -69,7 +10,7 @@ function messageErreur($length){
     return "Erreur the password must not exceed 30 characters !";
   }
   else if ( $length == null  && empty($length)) {
-    return "Please enter a number between 1 and 30 :)";
+    return "Please enter a number between 1 and 30 ";
   }
   elseif ($length < 0) { 
        return "Erreur the number must not be negative !";
@@ -79,18 +20,51 @@ function messageErreur($length){
   }
 
   }
-function generer_mot_de_passe($longueur ) {
 
-    
+
+function generer_mot_de_passe($longueur) {
+
+    $lon = $_POST['taille'];
     if (messageErreur($longueur) == "correct"){
-        $lon = $_POST['taille'];
+
+
+
+      $use_uppercase = isset($_POST['uppercase']); // Utilisation de lettres majuscules
+      $use_numbers = isset($_POST['numbers']); // Utilisation de chiffres
+      $use_symbols = isset($_POST['symbols']); // Utilisation de caractères spéciaux
+      $lawcase= isset($_POST['lawcase']); 
+
+      $chars = '';
+      echo $chars;
+
+      if ($use_uppercase) {
+          $chars .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      }
+      if ($lawcase) {
+
+        $chars .= 'abcdefghijklmnopqrstuvwxyz';
+    }
+      if ($use_numbers) {
+          $chars .= '0123456789';
+      }
+      if ($use_symbols) {
+          $chars .= '!@#$%^&*()_+-={}[]|\:;"<>,.?/~` ';
+      }
+      if (empty($use_symbols) && empty($use_numbers) && empty($use_uppercase) && empty($lawcase)){
+        $chars .= '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+-={}[]|\:;"<>,.?/~ ';
+      }
+
+
+        
+
+
         // Liste des caractères possibles dans le mot de passe
-        $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+       // $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         // Initialisation du mot de passe
         $mot_de_passe = '';
         // Boucle pour générer le mot de passe caractère par caractère
         for ($i = 0; $i < $lon; $i++) {
-          $mot_de_passe .= $caracteres[rand(0, strlen($caracteres) - 1)];
+          $mot_de_passe .= $chars[rand(0, strlen($chars) - 1)];
         }
         // Retourner le mot de passe généré
          return $mot_de_passe;
@@ -99,6 +73,8 @@ function generer_mot_de_passe($longueur ) {
     }
   
 }
+
+
 
 
 
@@ -134,8 +110,7 @@ function generer_mot_de_passe($longueur ) {
               <div class="card-body p-md-5 mx-md-4">
 
                 <div class="text-center">
-                  <img src="gif_logo-2.gif"
-                    style="width: 185px;" alt="logo">
+                  <img src="gif_logo-2.gif" style="width: 185px;" alt="logo">
                   <h3 class="mt-1 mb-5 pb-1">We are CERI Students team</h3>
                 </div>
 
@@ -144,7 +119,30 @@ function generer_mot_de_passe($longueur ) {
 
                   <div class="form-outline mb-4">
                     <input type='number' name='taille' class="form-control"
-                      placeholder="Please enter a number"  title='Please enter a number between 1 & 30' />
+                      placeholder="Please enter a number"  title='Please enter a number between 1 & 30' value=""/>
+                      <br>
+                      <input type='text' name='' class="form-control"
+                      placeholder="Restricted characters for the password"  title='' value=""/>
+                      <br>
+                      <label>
+                        <input type="checkbox" name="uppercase" value="">
+                        uppercase
+                        </label> 
+                        <br> 
+                        <label>
+                        <input type="checkbox" name="lawcase" value="">
+                        lawcase
+                        </label> 
+                        <br> 
+                        <label>
+                        <input type="checkbox" name="numbers" value="">
+                        numbers
+                        </label>  
+                        <br>
+                        <label>
+                        <input type="checkbox" name="symbols" value="">
+                        symbols
+                        </label>  
                    
                   </div>
 
@@ -157,7 +155,6 @@ function generer_mot_de_passe($longueur ) {
                           $mot_de_passe = generer_mot_de_passe($_POST['taille']);
                           echo $mot_de_passe;
                         }
-                         
               
                     ?>    
                   </div>
