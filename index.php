@@ -29,29 +29,34 @@ function generer_mot_de_passe($longueur ) {
       $use_numbers = isset($_POST['numbers']); // Utilisation de chiffres
       $use_symbols = isset($_POST['symbols']); // Utilisation de caractères spéciaux
       $lawcase= isset($_POST['lawcase']); 
-
+      // initialisation de variable chars (vide) dans lequel on va stocker les caractères à générer pour le password  
       $chars = '';
+      // pour les Majuscule 
       if ($use_uppercase) {
           $chars .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
           
       }
+      // pour les miniscules 
       if ($lawcase) {
         $chars .= 'abcdefghijklmnopqrstuvwxyz';
     }
+    // pour les numéros 
       if ($use_numbers) {
           $chars .= '0123456789';
-      }
+      } // pour les caractères spéciaux 
       if ($use_symbols) {
-          $chars .= '!@#$%^&*()_+-={}[]|\:;"<>,.?/~`';
+          $chars .= '!@#$%^&*()_+-={}[]|\:;"<>,.?/~` ';
       }
+      // si l'utilisateur n'a rien coché, on va générer un MDP avec tout les types 
       else if(!isset($_POST['lawcase']) && !isset($_POST['uppercase']) && !isset($_POST['symbols']) && !isset($_POST['numbers'])){
-        $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+-={}[]|\:;"<>,.?/~` ';
       }
 
 
         $lon = $_POST['taille'];
         // Liste des caractères possibles dans le mot de passe
-       // $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      
+
         // Initialisation du mot de passe
         $mot_de_passe = '';
         // Boucle pour générer le mot de passe caractère par caractère
@@ -61,6 +66,7 @@ function generer_mot_de_passe($longueur ) {
         // Retourner le mot de passe généré
          return $mot_de_passe;
     } else {
+      // on va envoyer un message d'erreur si l'utilisateur n'a pas saisie la longueur du mot de passe 
         return   $mot_de_passe = messageErreur($longueur) ;
     }
   
