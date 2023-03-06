@@ -27,14 +27,18 @@ function generer_mot_de_passe($longueur) {
     $lon = $_POST['taille'];
     if (messageErreur($longueur) == "correct"){
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 07c91ab3e4e0c9a1eeed5d1dd4aced9af7f0a5b1
       $use_uppercase = isset($_POST['uppercase']); // Utilisation de lettres majuscules
       $use_numbers = isset($_POST['numbers']); // Utilisation de chiffres
       $use_symbols = isset($_POST['symbols']); // Utilisation de caractères spéciaux
       $lawcase= isset($_POST['lawcase']); 
 
       $chars = '';
+<<<<<<< HEAD
       echo $chars;
 
       if ($use_uppercase) {
@@ -42,12 +46,20 @@ function generer_mot_de_passe($longueur) {
       }
       if ($lawcase) {
 
+=======
+      if ($use_uppercase) {
+          $chars .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+          
+      }
+      if ($lawcase) {
+>>>>>>> 07c91ab3e4e0c9a1eeed5d1dd4aced9af7f0a5b1
         $chars .= 'abcdefghijklmnopqrstuvwxyz';
     }
       if ($use_numbers) {
           $chars .= '0123456789';
       }
       if ($use_symbols) {
+<<<<<<< HEAD
           $chars .= '!@#$%^&*()_+-={}[]|\:;"<>,.?/~` ';
       }
       if (empty($use_symbols) && empty($use_numbers) && empty($use_uppercase) && empty($lawcase)){
@@ -58,6 +70,16 @@ function generer_mot_de_passe($longueur) {
         
 
 
+=======
+          $chars .= '!@#$%^&*()_+-={}[]|\:;"<>,.?/~`';
+      }
+      else if(!isset($_POST['lawcase']) && !isset($_POST['uppercase']) && !isset($_POST['symbols']) && !isset($_POST['numbers'])){
+        $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      }
+
+
+        $lon = $_POST['taille'];
+>>>>>>> 07c91ab3e4e0c9a1eeed5d1dd4aced9af7f0a5b1
         // Liste des caractères possibles dans le mot de passe
        // $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         // Initialisation du mot de passe

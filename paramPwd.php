@@ -1,3 +1,4 @@
+
 <?php
 // Récupère les paramètres pour adapter selon les besoins de l'utilisateur
 //$SaisieNbrPasswd     = $_GET['nbrPasswd']    ;
