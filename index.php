@@ -20,7 +20,7 @@ function messageErreur($length){
   }
 
   }
-function generer_mot_de_passe($longueur ) {
+function generer_mot_de_passe($longueur,$caractere_exclue) {
 
     
     if (messageErreur($longueur) == "correct"){
@@ -55,7 +55,9 @@ function generer_mot_de_passe($longueur ) {
 
         $lon = $_POST['taille'];
         // Liste des caractères possibles dans le mot de passe
-      
+        if ($caractere_exclue!=null){
+          $chars = str_replace(str_split($caractere_exclue), '', $chars);
+        }
 
         // Initialisation du mot de passe
         $mot_de_passe = '';
@@ -120,7 +122,7 @@ function generer_mot_de_passe($longueur ) {
                     <input type='number' name='taille' class="form-control"
                       placeholder="Please enter a number"  title='Please enter a number between 1 & 30' value=""/>
                       <br>
-                      <input type='text' name='' class="form-control"
+                      <input type='text' name='caractere_exclue' class="form-control"
                       placeholder="Restricted characters for the password"  title='' value=""/>
                       <br>
                       <label>
@@ -150,10 +152,17 @@ function generer_mot_de_passe($longueur ) {
 
                     <?php
                      
-                        if(isset($_POST['taille']) ){
-                          $mot_de_passe = generer_mot_de_passe($_POST['taille']);
-                          echo $mot_de_passe;
-                        }
+                     if(isset($_POST['taille']) ){
+                      //$caractere_exclue = $_POST['caractere_exclue'];
+                      if(isset($_POST['caractere_exclue'])){
+                      $mot_de_passe = generer_mot_de_passe($_POST['taille'], $_POST['caractere_exclue']);
+                      echo $mot_de_passe;
+                      }
+                      else {
+                        $mot_de_passe = generer_mot_de_passe($_POST['taille'], null);
+                        echo $mot_de_passe;
+                      }
+                    }
               
                     ?>    
                   </div>
