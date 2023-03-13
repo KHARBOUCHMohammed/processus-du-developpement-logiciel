@@ -127,12 +127,30 @@ function generer_mot_de_passe($longueur,$caractere_exclue) {
                             }
 
 
-
-
                             if(isset($_POST['uppercase'])){
-                          $l = true; 
+                          $uper = "checked";
                           } else{
-                            $l = false;
+                            $uper = ""; 
+                            }
+
+                           if(isset($_POST['lawcase'])){
+                          $law = "checked";
+                          } else{
+                            $law = ""; 
+                            }
+
+
+                              if(isset($_POST['numbers'])){
+                          $num = "checked";
+                          } else{
+                            $num = ""; 
+                            }
+
+
+                              if(isset($_POST['symbols'])){
+                          $sym = "checked";
+                          } else{
+                            $sym = ""; 
                             }
 
 
@@ -148,22 +166,22 @@ function generer_mot_de_passe($longueur,$caractere_exclue) {
                       placeholder="Restricted characters for the password"  title='' value=""/>
                       <br>
                       <label>
-                        <input type="checkbox" name="uppercase" value="<?php echo $t ?>">
+                        <input type="checkbox" name="uppercase" value="" <?php  echo $uper ?> >
                         uppercase
                         </label> 
                         <br> 
                         <label>
-                        <input type="checkbox" name="lawcase" value="checked">
+                        <input type="checkbox" name="lawcase" value="" <?php echo $law ?> >
                         lawcase
                         </label> 
                         <br> 
                         <label>
-                        <input type="checkbox" name="numbers" value="">
+                        <input type="checkbox" name="numbers" value="" <?php echo $num ?>>
                         numbers
                         </label>  
                         <br>
                         <label>
-                        <input type="checkbox" name="symbols" value="">
+                        <input type="checkbox" name="symbols" value="" <?php echo $sym ?>>
                         symbols
                         </label>  
                    
