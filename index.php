@@ -20,7 +20,7 @@ function messageErreur($length){
   }
 
   }
-function generer_mot_de_passe($longueur,$caractere_exclue) {
+function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
 
     
     if (messageErreur($longueur) == "correct"){
@@ -43,13 +43,20 @@ function generer_mot_de_passe($longueur,$caractere_exclue) {
     // pour les numéros 
       if ($use_numbers) {
           $chars .= '0123456789';
-      } // pour les caractères spéciaux 
-      if ($use_symbols) {
+      }  // pour les caractères spéciaux 
+      if ($use_symbols && $caractere_inclue == null ) {
           $chars .= '!@#$%^&*()_+-={}[]|\:;"<>,.?/~` ';
+      } // pour les caractères spéciaux  + caractère spéciaux à inclure 
+      if($use_symbols && $caractere_inclue != null ){
+        $chars .= $caractere_inclue;
       }
       // si l'utilisateur n'a rien coché, on va générer un MDP avec tout les types 
-      else if(!isset($_POST['lawcase']) && !isset($_POST['uppercase']) && !isset($_POST['symbols']) && !isset($_POST['numbers'])){
+      else if(!isset($_POST['lawcase']) && !isset($_POST['uppercase']) && !isset($_POST['symbols']) && !isset($_POST['numbers']) && $caractere_inclue == null){
         $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+-={}[]|\:;"<>,.?/~` ';
+      }//si l'utilisateur n'a rien coché et il a choisi ces caractères spéciaux 
+      else if(!isset($_POST['lawcase']) && !isset($_POST['uppercase']) && !isset($_POST['symbols']) && !isset($_POST['numbers']) && $caractere_inclue != null){
+        $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $chars .= $caractere_inclue; 
       }
 
 
@@ -162,6 +169,9 @@ function generer_mot_de_passe($longueur,$caractere_exclue) {
                     <input type='number' name='taille' class="form-control"
                       placeholder="Please enter a number"  title='Please enter a number between 1 & 30' value="<?php echo $length ?>"/>
                       <br>
+                      <input type='text' name='caractere_inclue' class="form-control"
+                      placeholder="Choose yours special characters"  title='' value=""/>
+                      <br>
                       <input type='text' name='caractere_exclue' class="form-control"
                       placeholder="Restricted characters for the password"  title='' value=""/>
                       <br>
@@ -191,16 +201,28 @@ function generer_mot_de_passe($longueur,$caractere_exclue) {
                   
 
                     <?php
-                     
-                     if(isset($_POST['taille']) ){
-                      //$caractere_exclue = $_POST['caractere_exclue'];
+
+                    if(isset($_POST['taille']) ){
                       if(isset($_POST['caractere_exclue'])){
-                      $mot_de_passe = generer_mot_de_passe($_POST['taille'], $_POST['caractere_exclue']);
-                      echo $mot_de_passe;
+                        if(isset($_POST['caractere_inclue'])){
+                          $mot_de_passe = generer_mot_de_passe($_POST['taille'], $_POST['caractere_exclue'], $_POST['caractere_inclue']);
+                          echo $mot_de_passe;
+                        }
+                        else {
+                          $mot_de_passe = generer_mot_de_passe($_POST['taille'], $_POST['caractere_exclue'],null);
+                          echo $mot_de_passe;
+                        }
+
                       }
                       else {
-                        $mot_de_passe = generer_mot_de_passe($_POST['taille'], null);
-                        echo $mot_de_passe;
+                        if(isset($_POST['caractere_inclue'])){
+                          $mot_de_passe = generer_mot_de_passe($_POST['taille'], null, $_POST['caractere_inclue']);
+                          echo $mot_de_passe;
+                        }
+                        else {
+                          $mot_de_passe = generer_mot_de_passe($_POST['taille'], null,null);
+                          echo $mot_de_passe;
+                        }  
                       }
                     }
               
