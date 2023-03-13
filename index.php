@@ -31,32 +31,39 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
       $lawcase= isset($_POST['lawcase']); 
       // initialisation de variable chars (vide) dans lequel on va stocker les caractères à générer pour le password  
       $chars = '';
+      $nb_caracteres = 0;
       // pour les Majuscule 
       if ($use_uppercase) {
           $chars .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-          
+          $nb_caracteres = $nb_caracteres + 26;
       }
       // pour les miniscules 
       if ($lawcase) {
         $chars .= 'abcdefghijklmnopqrstuvwxyz';
+        $nb_caracteres = $nb_caracteres + 26;
     }
     // pour les numéros 
       if ($use_numbers) {
           $chars .= '0123456789';
+          $nb_caracteres = $nb_caracteres + 10;
       }  // pour les caractères spéciaux 
       if ($use_symbols && $caractere_inclue == null ) {
           $chars .= '!@#$%^&*()_+-={}[]|\:;"<>,.?/~` ';
+          $nb_caracteres = $nb_caracteres + 32;
       } // pour les caractères spéciaux  + caractère spéciaux à inclure 
       if($use_symbols && $caractere_inclue != null ){
         $chars .= $caractere_inclue;
+        $nb_caracteres = $nb_caracteres - (32-strlen($caractere_inclue)); // A voir si c'est la bonne formule
       }
       // si l'utilisateur n'a rien coché, on va générer un MDP avec tout les types 
       else if(!isset($_POST['lawcase']) && !isset($_POST['uppercase']) && !isset($_POST['symbols']) && !isset($_POST['numbers']) && $caractere_inclue == null){
         $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+-={}[]|\:;"<>,.?/~` ';
+        $nb_caracteres = $nb_caracteres + 96;
       }//si l'utilisateur n'a rien coché et il a choisi ces caractères spéciaux 
       else if(!isset($_POST['lawcase']) && !isset($_POST['uppercase']) && !isset($_POST['symbols']) && !isset($_POST['numbers']) && $caractere_inclue != null){
         $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $chars .= $caractere_inclue; 
+        $nb_caracteres = strlen($chars);
       }
 
 
@@ -72,8 +79,9 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
         for ($i = 0; $i < $lon; $i++) {
           $mot_de_passe .= $chars[rand(0, strlen($chars) - 1)];
         }
+        $entropy = log(pow($nb_caracteres, $lon), 2);
         // Retourner le mot de passe généré
-         return $mot_de_passe;
+        return array($mot_de_passe, $entropy);
     } else {
       // on va envoyer un message d'erreur si l'utilisateur n'a pas saisie la longueur du mot de passe 
         return   $mot_de_passe = messageErreur($longueur) ;
@@ -205,24 +213,36 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
                     if(isset($_POST['taille']) ){
                       if(isset($_POST['caractere_exclue'])){
                         if(isset($_POST['caractere_inclue'])){
-                          $mot_de_passe = generer_mot_de_passe($_POST['taille'], $_POST['caractere_exclue'], $_POST['caractere_inclue']);
+                          list($mot_de_passe, $entropy)= generer_mot_de_passe($_POST['taille'], $_POST['caractere_exclue'], $_POST['caractere_inclue']);
                           echo $mot_de_passe;
                         }
                         else {
-                          $mot_de_passe = generer_mot_de_passe($_POST['taille'], $_POST['caractere_exclue'],null);
+                          list($mot_de_passe, $entropy) = generer_mot_de_passe($_POST['taille'], $_POST['caractere_exclue'],null);
                           echo $mot_de_passe;
                         }
 
                       }
                       else {
                         if(isset($_POST['caractere_inclue'])){
-                          $mot_de_passe = generer_mot_de_passe($_POST['taille'], null, $_POST['caractere_inclue']);
+                          list($mot_de_passe, $entropy) = generer_mot_de_passe($_POST['taille'], null, $_POST['caractere_inclue']);
                           echo $mot_de_passe;
                         }
                         else {
-                          $mot_de_passe = generer_mot_de_passe($_POST['taille'], null,null);
+                          list($mot_de_passe, $entropy) = generer_mot_de_passe($_POST['taille'], null,null);
                           echo $mot_de_passe;
                         }  
+                      }
+                      if ($entropy < 75) 
+                      {
+                        echo "<br>The Password complexity is low";
+                      }
+                      else if ($entropy > 75 && $entropy < 100)
+                      {
+                        echo "<br>The Password complexity is medium";
+                      }
+                      else
+                      {
+                        echo "<br>The password complexity is high";
                       }
                     }
               
