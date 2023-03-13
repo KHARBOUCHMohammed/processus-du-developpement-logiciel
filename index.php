@@ -119,19 +119,41 @@ function generer_mot_de_passe($longueur,$caractere_exclue) {
                   <p>Please enter the password size</p>
 
                   <div class="form-outline mb-4">
+
+                    <?php if(isset($_POST['taille'])){
+                          $length = $_POST['taille']; 
+                          } else{
+                            $length = 12;
+                            }
+
+
+
+
+                            if(isset($_POST['uppercase'])){
+                          $l = true; 
+                          } else{
+                            $l = false;
+                            }
+
+
+
+
+
+
+                             ?>
                     <input type='number' name='taille' class="form-control"
-                      placeholder="Please enter a number"  title='Please enter a number between 1 & 30' value=""/>
+                      placeholder="Please enter a number"  title='Please enter a number between 1 & 30' value="<?php echo $length ?>"/>
                       <br>
                       <input type='text' name='caractere_exclue' class="form-control"
                       placeholder="Restricted characters for the password"  title='' value=""/>
                       <br>
                       <label>
-                        <input type="checkbox" name="uppercase" value="">
+                        <input type="checkbox" name="uppercase" value="<?php echo $t ?>">
                         uppercase
                         </label> 
                         <br> 
                         <label>
-                        <input type="checkbox" name="lawcase" value="">
+                        <input type="checkbox" name="lawcase" value="checked">
                         lawcase
                         </label> 
                         <br> 
