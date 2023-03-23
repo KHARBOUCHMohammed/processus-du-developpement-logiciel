@@ -91,67 +91,8 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
     }
   
 }
-/*
-
-function calculer_entropie($mot_de_passe) {
-    $caracteres = str_split($mot_de_passe);
-    $nb_caracteres = count($caracteres);
-    $alphabet = array();
-    
-    // compter le nombre d'occurrences de chaque caractère dans le mot de passe
-    foreach ($caracteres as $caractere) {
-        if (isset($alphabet[$caractere])) {
-            $alphabet[$caractere]++;
-        } else {
-            $alphabet[$caractere] = 1;
-        }
-    }
-    
-    // calculer l'entropie
-    $entropie = 0;
-    foreach ($alphabet as $occurrences) {
-        $proba = $occurrences / $nb_caracteres;
-        $entropie -= $proba * log($proba, 2);
-    }
-    
-    return $entropie;
-}*/
-
-
-
-
-function passwordStrength($mot_de_passe) {
-    $entropy = 0;
-    $len = strlen($mot_de_passe);
-
-    // Count occurrence of each character
-    $chars = array_count_values(str_split($mot_de_passe));
-
-    // Calculate entropy
-    foreach($chars as $char=>$count) {
-        $p = $count/$len;
-        $entropy -= $p*log($p)/log(2);
-    }
-
-    // Determine password strength
-    if($entropy > 4.5) {
-        return "Fort";
-    } elseif($entropy > 2) {
-        return "Moyen";
-    } else {
-        return "Faible";
-    }
-}
-
 
 ?>
-
-
-
-
-
-
-
 
 
 
@@ -326,12 +267,7 @@ function passwordStrength($mot_de_passe) {
 
 
                         }  
-                      }
-                      /*************/
-
-                      /************/
-                   
-                      
+                      }                  
                     }
                        
                     ?>    
