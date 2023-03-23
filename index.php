@@ -161,8 +161,9 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
                             }
 
                           if(isset($_POST['caractere_inclue'])){
-                          $inc = $_POST['caractere_inclue']; 
-                          } else{
+                          $inc = $_POST['caractere_inclue'];
+                           }
+                          else{
                             $inc = "";
                             }
 
@@ -171,6 +172,7 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
                           } else{
                             $ex = "";
                             }
+
 
 
 
@@ -217,6 +219,7 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
                         if(isset($_POST['caractere_inclue'])){
                           list($mot_de_passe, $entropy)= generer_mot_de_passe($_POST['taille'], $_POST['caractere_exclue'], $_POST['caractere_inclue']);
 
+                          
                           if( $length == 0){
                             echo "Erreur the number must not be zero !";
                           }
@@ -245,7 +248,23 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
                       {
                         echo "<br>The password complexity is high";
                       }
+                      
+                        
+                      
+                      if (preg_match('/^[^a-zA-Z0-9]+$/', $inc))
+                          { 
+                            echo ""; 
+                          }
+                          else if (empty($inc)) 
+                          {
+                            echo '';
+                          }
+                          else
+                          {
+                            echo "<br> You must enter only special characters.";
+                          }
                       }
+                      
 
                         }
                         else {
@@ -257,6 +276,7 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
                       else {
                         if(isset($_POST['caractere_inclue'])){
                           list($mot_de_passe, $entropy) = generer_mot_de_passe($_POST['taille'], null, $_POST['caractere_inclue']);
+
                           echo $mot_de_passe;
                         }
                         else {
@@ -267,7 +287,9 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
 
 
                         }  
-                      }                  
+                      }  
+
+                                    
                     }
                        
                     ?>    
