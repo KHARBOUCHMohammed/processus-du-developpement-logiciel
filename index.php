@@ -81,16 +81,67 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
         }
         $entropy = log(pow($nb_caracteres, $lon), 2);
         // Retourner le mot de passe généré
+        
         return array($mot_de_passe, $entropy);
+
+       // return $mot_de_passe;
     } else {
       // on va envoyer un message d'erreur si l'utilisateur n'a pas saisie la longueur du mot de passe 
         return   $mot_de_passe = messageErreur($longueur) ;
     }
   
 }
+/*
+
+function calculer_entropie($mot_de_passe) {
+    $caracteres = str_split($mot_de_passe);
+    $nb_caracteres = count($caracteres);
+    $alphabet = array();
+    
+    // compter le nombre d'occurrences de chaque caractère dans le mot de passe
+    foreach ($caracteres as $caractere) {
+        if (isset($alphabet[$caractere])) {
+            $alphabet[$caractere]++;
+        } else {
+            $alphabet[$caractere] = 1;
+        }
+    }
+    
+    // calculer l'entropie
+    $entropie = 0;
+    foreach ($alphabet as $occurrences) {
+        $proba = $occurrences / $nb_caracteres;
+        $entropie -= $proba * log($proba, 2);
+    }
+    
+    return $entropie;
+}*/
 
 
 
+
+function passwordStrength($mot_de_passe) {
+    $entropy = 0;
+    $len = strlen($mot_de_passe);
+
+    // Count occurrence of each character
+    $chars = array_count_values(str_split($mot_de_passe));
+
+    // Calculate entropy
+    foreach($chars as $char=>$count) {
+        $p = $count/$len;
+        $entropy -= $p*log($p)/log(2);
+    }
+
+    // Determine password strength
+    if($entropy > 4.5) {
+        return "Fort";
+    } elseif($entropy > 2) {
+        return "Moyen";
+    } else {
+        return "Faible";
+    }
+}
 
 
 ?>
@@ -168,8 +219,17 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
                             $sym = ""; 
                             }
 
+                          if(isset($_POST['caractere_inclue'])){
+                          $inc = $_POST['caractere_inclue']; 
+                          } else{
+                            $inc = "";
+                            }
 
-
+                          if(isset($_POST['caractere_exclue'])){
+                          $ex = $_POST['caractere_exclue']; 
+                          } else{
+                            $ex = "";
+                            }
 
 
 
@@ -178,10 +238,10 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
                       placeholder="Please enter a number"  title='Please enter a number between 1 & 30' value="<?php echo $length ?>"/>
                       <br>
                       <input type='text' name='caractere_inclue' class="form-control"
-                      placeholder="Choose yours special characters"  title='' value=""/>
+                      placeholder="Choose yours special characters"  title='' value="<?php echo $inc ?>"/>
                       <br>
                       <input type='text' name='caractere_exclue' class="form-control"
-                      placeholder="Restricted characters for the password"  title='' value=""/>
+                      placeholder="Restricted characters for the password"  title='' value="<?php echo $ex ?>"/>
                       <br>
                       <label>
                         <input type="checkbox" name="uppercase" value="" <?php  echo $uper ?> >
@@ -210,14 +270,45 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
 
                     <?php
 
-                    if(isset($_POST['taille']) ){
+
+                    if(isset($_POST['taille'])){
                       if(isset($_POST['caractere_exclue'])){
                         if(isset($_POST['caractere_inclue'])){
                           list($mot_de_passe, $entropy)= generer_mot_de_passe($_POST['taille'], $_POST['caractere_exclue'], $_POST['caractere_inclue']);
-                          echo $mot_de_passe;
+
+                          if( $length == 0){
+                            echo "Erreur the number must not be zero !";
+                          }
+                          elseif($length > 30){
+                            echo "Erreur the password must not exceed 30 characters !";
+                          }
+                          else if ( $length == null  && empty($length)) {
+                            echo "Please enter a number between 1 and 30 ";
+                          }
+                          elseif ($length < 0) { 
+                            echo "Erreur the number must not be negative !";
+                            } 
+                        else if ($length > 0 && $length <=30 ) { 
+                          echo $mot_de_passe . "<br>";
+
+                          if ($entropy < 75) 
+                      {
+                        echo "<br>The Password complexity is low";
+                       
+                      }
+                      else if ($entropy > 75 && $entropy < 100)
+                      {
+                        echo "<br>The Password complexity is medium";
+                      }
+                      else
+                      {
+                        echo "<br>The password complexity is high";
+                      }
+                      }
+
                         }
                         else {
-                          list($mot_de_passe, $entropy) = generer_mot_de_passe($_POST['taille'], $_POST['caractere_exclue'],null);
+                        $mot_de_passe = generer_mot_de_passe($_POST['taille'], $_POST['caractere_exclue'],null);
                           echo $mot_de_passe;
                         }
 
@@ -230,22 +321,19 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
                         else {
                           list($mot_de_passe, $entropy) = generer_mot_de_passe($_POST['taille'], null,null);
                           echo $mot_de_passe;
+
+
+
+
                         }  
                       }
-                      if ($entropy < 75) 
-                      {
-                        echo "<br>The Password complexity is low";
-                      }
-                      else if ($entropy > 75 && $entropy < 100)
-                      {
-                        echo "<br>The Password complexity is medium";
-                      }
-                      else
-                      {
-                        echo "<br>The password complexity is high";
-                      }
+                      /*************/
+
+                      /************/
+                   
+                      
                     }
-              
+                       
                     ?>    
                   </div>
 
