@@ -4,16 +4,16 @@
 function messageErreur($length){
 
   if( $length == 0){
-    return "Error the number must not be zero !";
+    return "Erreur the number must not be zero !";
   }
   elseif($length > 30){
-    return "Error the password must not exceed 30 characters !";
+    return "Erreur the password must not exceed 30 characters !";
   }
   else if ( $length == null  && empty($length)) {
     return "Please enter a number between 1 and 30 ";
   }
   elseif ($length < 0) { 
-       return "Error the number must not be negative !";
+       return "Erreur the number must not be negative !";
     }
   else {
       return "correct";
@@ -119,11 +119,11 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
                 <div class="text-center">
                   <img src="gif_logo-2.gif"
                     style="width: 185px;" alt="logo">
-                  <h3 class="mt-1 mb-5 pb-1">We are CERI Students team</h3>
+                  <h3 class="mt-1 mb-5 pb-1">Nous sommes l'équipe des étudiants du CERI</h3>
                 </div>
 
                      <form method="POST" >
-                  <p>Please enter the password size</p>
+                  <p>Veuillez saisir la taille du mot de passe</p>
 
                   <div class="form-outline mb-4">
 
@@ -178,13 +178,13 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
 
                              ?>
                     <input type='number' name='taille' class="form-control"
-                      placeholder="Please enter a number"  title='Please enter a number between 1 & 30' value="<?php echo $length ?>"/>
+                      placeholder="Veuillez saisir un numéro"  title='Veuillez saisir un nombre entre 1 et 30' value="<?php echo $length ?>"/>
                       <br>
                       <input type='text' name='caractere_inclue' class="form-control"
-                      placeholder="Choose yours special characters"  title='' value="<?php echo $inc ?>"/>
+                      placeholder="Choisissez vos caractères spéciaux"  title='' value="<?php echo $inc ?>"/>
                       <br>
                       <input type='text' name='caractere_exclue' class="form-control"
-                      placeholder="Restricted characters for the password"  title='' value="<?php echo $ex ?>"/>
+                      placeholder="Caractères restreints pour votre mot de passe"  title='' value="<?php echo $ex ?>"/>
                       <br>
                       <label>
                         <input type="checkbox" name="uppercase" value="" <?php  echo $uper ?> >
@@ -221,32 +221,32 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
 
                           
                           if( $length == 0){
-                            echo "Error the number must not be zero !";
+                            echo "Erreur le nombre ne doit pas être nul !";
                           }
                           elseif($length > 30){
-                            echo "Error the password must not exceed 30 characters !";
+                            echo "Erreur le mot de passe ne doit pas dépasser 30 caractères !";
                           }
                           else if ( $length == null  && empty($length)) {
-                            echo "Please enter a number between 1 and 30 ";
+                            echo "Veuillez saisir un nombre entre 1 et 30 ";
                           }
                           elseif ($length < 0) { 
-                            echo "Error the number must not be negative !";
+                            echo "Erreur le nombre ne doit pas être négatif !";
                             } 
                         else if ($length > 0 && $length <=30 ) { 
                           echo $mot_de_passe . "<br>";
 
                           if ($entropy < 75) 
                       {
-                        echo "<br>The Password complexity is low";
+                        echo "<br>La complexité du mot de passe est Faible";
                        
                       }
                       else if ($entropy > 75 && $entropy < 100)
                       {
-                        echo "<br>The Password complexity is medium";
+                        echo "<br>La complexité du mot de passe est Moyenne";
                       }
                       else
                       {
-                        echo "<br>The password complexity is high";
+                        echo "<br>La complexité du mot de passe est Forte";
                       }
                       
                         
@@ -261,7 +261,7 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
                           }
                           else
                           {
-                            echo "<br> You must enter only special characters.";
+                            echo "<br> Vous ne devez saisir que des caractères Spéciaux.";
                           }
                       }
                       
@@ -296,7 +296,7 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
                   </div>
 
                   <div class="text-center pt-1 mb-5 pb-1">
-                    <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit"> Generate Password</button>
+                    <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit"> Générer un mot de passe</button>
                  
                   </div>
 
@@ -308,10 +308,10 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
             <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
               <a style="position: absolute;
     top: 0;
-    left: 0;" href="http://localhost/webservice/processus-du-developpement-logiciel/fr.php"> fr/En </a>
+    left: 0;" href="http://localhost/webservice/processus-du-developpement-logiciel/"> fr/En </a>
               <div class="text-white px-3 py-4 p-md-5 mx-md-4">
-                <h3 class="mb-4">Password Generator</h3>
-                 <p class="small" style="font-size: x-large;">Your website allows you to generate passwords automatically, by choosing its size</p>
+                <h3 class="mb-4">Générateur de mot de passe</h3>
+                 <p class="small" style="font-size: x-large;">Votre site web vous permet de générer des mots de passe automatiquement, en choisissant sa taille</p>
              </div>
             </div>
           </div>
