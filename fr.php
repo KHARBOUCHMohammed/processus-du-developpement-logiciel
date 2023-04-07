@@ -1,4 +1,3 @@
-
 <?php
 
 function messageErreur($length){
@@ -188,22 +187,22 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
                       <br>
                       <label>
                         <input type="checkbox" name="uppercase" value="" <?php  echo $uper ?> >
-                        uppercase
+                        Majuscules
                         </label> 
                         <br> 
                         <label>
                         <input type="checkbox" name="lawcase" value="" <?php echo $law ?> >
-                        lawcase
+                        Miniscules
                         </label> 
                         <br> 
                         <label>
                         <input type="checkbox" name="numbers" value="" <?php echo $num ?>>
-                        numbers
+                        Nombres
                         </label>  
                         <br>
                         <label>
                         <input type="checkbox" name="symbols" value="" <?php echo $sym ?>>
-                        symbols
+                        Caractères Spéciaux
                         </label>  
                    
                   </div>
@@ -232,46 +231,34 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
                           elseif ($length < 0) { 
                             echo "Erreur le nombre ne doit pas être négatif !";
                             } 
-                        else if ($length > 0 && $length <=30 ) { 
+                        else if ($length > 0 && $length <=30 ) 
+                        { 
+                          if (preg_match('/^[^a-zA-Z0-9]+$/', $inc) || empty($inc))
+                          {
                           echo $mot_de_passe . "<br>";
 
-                          if ($entropy < 75) 
-                      {
-                        echo "<br>La complexité du mot de passe est Faible";
-                       
-                      }
-                      else if ($entropy > 75 && $entropy < 100)
-                      {
-                        echo "<br>La complexité du mot de passe est Moyenne";
-                      }
-                      else
-                      {
-                        echo "<br>La complexité du mot de passe est Forte";
-                      }
-                      
-                        
-                      
-                      if (preg_match('/^[^a-zA-Z0-9]+$/', $inc))
-                          { 
-                            echo ""; 
-                          }
-                          else if (empty($inc)) 
-                          {
-                            echo '';
+                            if ($entropy < 75) 
+                            {
+                              echo "<br>La complexité du mot de passe est Faible";
+                            }
+                            else if ($entropy > 75 && $entropy < 100)
+                            {
+                              echo "<br>La complexité du mot de passe est Moyenne";
+                            }
+                            else
+                            {
+                              echo "<br>La complexité du mot de passe est Forte";
+                            }
                           }
                           else
                           {
-                            echo "<br> Vous ne devez saisir que des caractères Spéciaux.";
+                            echo "Erreur: Vous ne devez saisir que des caractères Spéciaux.";
                           }
-                      }
-                      
-
                         }
                         else {
                         $mot_de_passe = generer_mot_de_passe($_POST['taille'], $_POST['caractere_exclue'],null);
                           echo $mot_de_passe;
                         }
-
                       }
                       else {
                         if(isset($_POST['caractere_inclue'])){
@@ -282,15 +269,12 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
                         else {
                           list($mot_de_passe, $entropy) = generer_mot_de_passe($_POST['taille'], null,null);
                           echo $mot_de_passe;
-
-
-
-
                         }  
                       }  
 
-                                    
+                    }               
                     }
+
                        
                     ?>    
                   </div>

@@ -1,4 +1,3 @@
-
 <?php
 
 function messageErreur($length){
@@ -233,39 +232,27 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
                             echo "Error the number must not be negative !";
                             } 
                         else if ($length > 0 && $length <=30 ) { 
-                          echo $mot_de_passe . "<br>";
-
-                          if ($entropy < 75) 
-                      {
-                        echo "<br>The Password complexity is low";
-                       
-                      }
-                      else if ($entropy > 75 && $entropy < 100)
-                      {
-                        echo "<br>The Password complexity is medium";
-                      }
-                      else
-                      {
-                        echo "<br>The password complexity is high";
-                      }
-                      
-                        
-                      
-                      if (preg_match('/^[^a-zA-Z0-9]+$/', $inc))
-                          { 
-                            echo ""; 
-                          }
-                          else if (empty($inc)) 
+                          if (preg_match('/^[^a-zA-Z0-9]+$/', $inc) || empty($inc))
                           {
-                            echo '';
+                            echo $mot_de_passe . "<br>";
+
+                            if ($entropy < 75) 
+                            {
+                            echo "<br>The Password complexity is low";
+                            }
+                            else if ($entropy > 75 && $entropy < 100)
+                            {
+                            echo "<br>The Password complexity is medium";
+                            }
+                            else
+                            {
+                            echo "<br>The password complexity is high";
+                            }
                           }
                           else
                           {
-                            echo "<br> You must enter only special characters.";
+                            echo "Error: You must enter only special characters.";
                           }
-                      }
-                      
-
                         }
                         else {
                         $mot_de_passe = generer_mot_de_passe($_POST['taille'], $_POST['caractere_exclue'],null);
@@ -287,11 +274,9 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
 
 
                         }  
-                      }  
-
-                                    
+                      }             
                     }
-                       
+                  }
                     ?>    
                   </div>
 
@@ -308,7 +293,7 @@ function generer_mot_de_passe($longueur,$caractere_exclue,$caractere_inclue) {
             <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
               <a style="position: absolute;
     top: 0;
-    left: 0;" href="http://localhost/webservice/processus-du-developpement-logiciel/fr.php"> fr/En </a>
+    left: 0;" href=http://localhost/webservice/processus-du-developpement-logiciel/fr.php> fr/En </a>
               <div class="text-white px-3 py-4 p-md-5 mx-md-4">
                 <h3 class="mb-4">Password Generator</h3>
                  <p class="small" style="font-size: x-large;">Your website allows you to generate passwords automatically, by choosing its size</p>
